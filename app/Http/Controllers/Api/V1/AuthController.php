@@ -21,6 +21,25 @@ use Validator;
  */
 class AuthController extends BaseApiController
 {
+    /**
+     * @api {post} auth/login 登陆
+     * @apiDescription 登陆返回 token
+     * @apiGroup Auth
+     * @apiPermission none
+     * @apiParam {Email} email     邮箱
+     * @apiParam {String} password  密码
+     * @apiVersion 1.0.0
+     * @apiSuccessExample {json} Success-Response:
+     *     HTTP/1.1 200 Created
+     *     {
+     *          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly9kZXYucGx1dG8ubWUvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE1MDQwOTM2NzIsImV4cCI6MTUwNDY5ODQ3MiwibmJmIjoxNTA0MDkzNjcyLCJqdGkiOiJWd3RYVTZ6SXg2R29JbFpTIn0.3vSW33vTPBkxk7eR_54PUk9f76lD-qTOQyFZLyNda94",
+     *     }
+     * @apiErrorExample {json} Error-Response:
+     *     HTTP/1.1 401
+     *     {
+     *       "error": "账号或密码错误"
+     *     }
+     */
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -49,6 +68,27 @@ class AuthController extends BaseApiController
         return $this->response->array(compact('token'));
     }
 
+    /**
+     * @api {post} auth/register 注册
+     * @apiDescription 注册返回 token
+     * @apiGroup Auth
+     * @apiPermission none
+     * @apiParam {Email} email     邮箱
+     * @apiParam {String} name     用户名
+     * @apiParam {Password} password  密码
+     * @apiParam {Password} password_confirmation  重复密码
+     * @apiVersion 1.0.0
+     * @apiSuccessExample {json} Success-Response:
+     *     HTTP/1.1 200 Created
+     *     {
+     *          "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlzcyI6Imh0dHA6Ly9kZXYucGx1dG8ubWUvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE1MDQwOTM2NzIsImV4cCI6MTUwNDY5ODQ3MiwibmJmIjoxNTA0MDkzNjcyLCJqdGkiOiJWd3RYVTZ6SXg2R29JbFpTIn0.3vSW33vTPBkxk7eR_54PUk9f76lD-qTOQyFZLyNda94",
+     *     }
+     * @apiErrorExample {json} Error-Response:
+     *     HTTP/1.1 422
+     *     {
+     *       "error": "两次输入的密码不一致"
+     *     }
+     */
     public function register(Request $request)
     {
         $data = $request->all();
